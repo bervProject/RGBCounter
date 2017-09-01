@@ -30,6 +30,7 @@ dependencies {
     compile 'com.github.esafirm.android-image-picker:imagepicker:1.7.5'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'com.facebook.fresco:fresco:1.5.0'
+    compile 'com.github.d-max:spots-dialog:0.7@aar'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testCompile 'junit:junit:4.12'

@@ -1,5 +1,6 @@
 package com.example.berviantoleopratama.rgbcounter;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +10,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.ArrayMap;
-import android.util.Log;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
@@ -19,15 +19,14 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dmax.dialog.SpotsDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     LineData lineDataRed;
     LineData lineDataGreen;
     LineData lineDataBlue;
+    AlertDialog dialog;
     private static int REQUEST_CODE_PICKER = 0;
 
     @Override
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        dialog = new SpotsDialog(this);
         lineDataRed = new LineData();
         lineDataGreen = new LineData();
         lineDataBlue = new LineData();
@@ -89,9 +90,8 @@ public class MainActivity extends AppCompatActivity {
                     lineDataGreen.clearValues();
                     lineDataRed.clearValues();
                     lineDataRed.notifyDataChanged();
+                    dialog.show();
                     new CountColour().execute(bitmap);
-                } else {
-                    super.onActivityResult(requestCode, resultCode, data);
                 }
             } else {
                 super.onActivityResult(requestCode, resultCode, data);
@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
             Map<Integer, Integer> red = new ArrayMap<>();
             Map<Integer, Integer> green = new ArrayMap<>();
             Map<Integer, Integer> blue = new ArrayMap<>();
-            for(int i=0; i<width; i++){
-                for(int j=0; j<height; j++) {
+            for(int j=0; j<height; j++){
+                for(int i=0; i<width; i++) {
                     int color = bitmap.getPixel(i,j);
                     int redColor = (color >> 16) & 0xff;
                     int greenColor = (color >> 8) & 0xff;
@@ -160,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
             redChart.invalidate();
             greenChart.invalidate();
             blueChart.invalidate();
+            dialog.dismiss();
         }
     }
 }
