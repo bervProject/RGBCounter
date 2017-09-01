@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.ArrayMap;
+import android.util.Log;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
@@ -20,6 +21,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     LineData lineDataGreen;
     LineData lineDataBlue;
     AlertDialog dialog;
+    long start;
     private static int REQUEST_CODE_PICKER = 0;
 
     @Override
@@ -91,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     lineDataRed.clearValues();
                     lineDataRed.notifyDataChanged();
                     dialog.show();
+                    start = System.nanoTime();
                     new CountColour().execute(bitmap);
                 }
             } else {
@@ -108,34 +112,27 @@ public class MainActivity extends AppCompatActivity {
             Bitmap bitmap = params[0];
             int width = bitmap.getWidth();
             int height = bitmap.getHeight();
-            int n = width * height;
-            Map<Integer, Integer> red = new ArrayMap<>();
-            Map<Integer, Integer> green = new ArrayMap<>();
-            Map<Integer, Integer> blue = new ArrayMap<>();
+            int[] red = new int[256];
+            int[] green = new int[256];
+            int[] blue = new int[256];
             for(int j=0; j<height; j++){
                 for(int i=0; i<width; i++) {
                     int color = bitmap.getPixel(i,j);
                     int redColor = (color >> 16) & 0xff;
                     int greenColor = (color >> 8) & 0xff;
                     int blueColor = color & 0xff;
-                    Integer redFreq = red.get(redColor);
-                    Integer greenFreq = red.get(greenColor);
-                    Integer blueFreq = red.get(blueColor);
-                    red.put(redColor, (redFreq==null) ? 1 : redFreq + 1);
-                    green.put(greenColor, (greenFreq==null) ? 1 : greenFreq + 1);
-                    blue.put(blueColor, (blueFreq==null) ? 1 : blueFreq + 1);
+                    red[redColor] += 1;
+                    green[greenColor] += 1;
+                    blue[blueColor] += 1;
                 }
             }
             List<Entry> entriesRed = new ArrayList<>();
             List<Entry> entriesGreen = new ArrayList<>();
             List<Entry> entriesBlue = new ArrayList<>();
-            for (int i=0; i<255; i++) {
-                Integer redVal = red.get(i);
-                Integer greenVal = green.get(i);
-                Integer blueVal = blue.get(i);
-                entriesRed.add(new Entry(i, (redVal==null) ? 0 : redVal));
-                entriesGreen.add(new Entry(i, (greenVal==null) ? 0 : greenVal));
-                entriesBlue.add(new Entry(i, (blueVal==null) ? 0 : blueVal));
+            for (int i=0; i<256; i++) {
+                entriesRed.add(new Entry(i, red[i]));
+                entriesGreen.add(new Entry(i, green[i]));
+                entriesBlue.add(new Entry(i, blue[i]));
             }
             LineDataSet dataSetRed = new LineDataSet(entriesRed, "red");
             LineDataSet dataSetGreen = new LineDataSet(entriesGreen, "green");
@@ -161,6 +158,9 @@ public class MainActivity extends AppCompatActivity {
             greenChart.invalidate();
             blueChart.invalidate();
             dialog.dismiss();
+            long end = System.nanoTime();
+            long duration = end - start;
+            Log.i("Process Photo",String.format("Waktu dibutuhkan : %d",duration));
         }
     }
 }
