@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.ArrayMap;
 import android.util.Log;
 
 import com.esafirm.imagepicker.features.ImagePicker;
@@ -21,9 +20,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     List<Image> images = ImagePicker.getImages(data);
                     Image output = images.get(0);
                     String path = output.getPath();
-                    Uri uri = Uri.parse("file://"+path);
+                    Uri uri = Uri.parse("file://" + path);
                     imageHolder.setImageURI(uri);
                     Bitmap bitmap = BitmapFactory.decodeFile(path);
                     lineDataBlue.clearValues();
@@ -115,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
             int[] red = new int[256];
             int[] green = new int[256];
             int[] blue = new int[256];
-            for(int j=0; j<height; j++){
-                for(int i=0; i<width; i++) {
+            for(int j = 0; j < height; j++){
+                for(int i = 0; i < width; i++) {
                     int color = bitmap.getPixel(i,j);
                     int redColor = (color >> 16) & 0xff;
                     int greenColor = (color >> 8) & 0xff;
@@ -129,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             List<Entry> entriesRed = new ArrayList<>();
             List<Entry> entriesGreen = new ArrayList<>();
             List<Entry> entriesBlue = new ArrayList<>();
-            for (int i=0; i<256; i++) {
+            for (int i = 0; i < 256; i++) {
                 entriesRed.add(new Entry(i, red[i]));
                 entriesGreen.add(new Entry(i, green[i]));
                 entriesBlue.add(new Entry(i, blue[i]));
@@ -160,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
             dialog.dismiss();
             long end = System.nanoTime();
             long duration = end - start;
-            Log.i("Process Photo",String.format("Waktu dibutuhkan : %d",duration));
+            Log.i("Process Photo", String.format("Waktu dibutuhkan : %d",duration));
         }
     }
 }
