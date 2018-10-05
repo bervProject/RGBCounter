@@ -1,5 +1,7 @@
 # RGBCounter
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/63b29de7e23d4110864abed64630e6ea)](https://app.codacy.com/app/berviantoleo/RGBCounter_2?utm_source=github.com&utm_medium=referral&utm_content=bervProject/RGBCounter&utm_campaign=Badge_Grade_Settings)
+
 Count Red, Green, Blue value each pixel in an picture.
 
 ## How to Use
