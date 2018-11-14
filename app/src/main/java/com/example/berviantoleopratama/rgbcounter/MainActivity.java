@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         ImagePicker.create(this)
                 .returnMode(ReturnMode.ALL)
                 .folderMode(true) // folder mode (false by default)
-                .folderTitle("Select Folder") // folder selection title
-                .imageTitle("Select Image") // image selection title
+                .toolbarFolderTitle("Select Folder") // folder selection title
+                .toolbarImageTitle("Select Image") // image selection title
                 .single() // single mode
                 .showCamera(true) // show camera or not (true by default)
                 .imageDirectory("RGB_Counter") // directory name for captured image  ("Camera" folder by default)
