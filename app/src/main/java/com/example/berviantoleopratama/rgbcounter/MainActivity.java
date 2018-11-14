@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.image_holder)
     void clickImage() {
         ImagePicker.create(this)
-                .returnAfterFirst(true) // set whether pick or camera action should return immediate result or not. For pick image only work on single mode
+                .returnMode(ReturnMode.ALL)
                 .folderMode(true) // folder mode (false by default)
                 .folderTitle("Select Folder") // folder selection title
                 .imageTitle("Select Image") // image selection title
