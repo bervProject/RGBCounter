@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
+import com.esafirm.imagepicker.features.ReturnMode;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
