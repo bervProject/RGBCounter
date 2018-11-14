@@ -15,7 +15,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         fresco:actualImageScaleType="fitCenter"
-        fresco:placeholderImage="@drawable/image_placeholder" />
+        fresco:placeholderImage="@color/colorPrimary" />
 
     <ScrollView
         android:layout_width="match_parent"

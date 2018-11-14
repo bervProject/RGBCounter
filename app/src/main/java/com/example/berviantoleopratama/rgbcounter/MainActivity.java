@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
+import com.esafirm.imagepicker.features.ReturnMode;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -62,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.image_holder)
     void clickImage() {
         ImagePicker.create(this)
-                .returnAfterFirst(true) // set whether pick or camera action should return immediate result or not. For pick image only work on single mode
+                .returnMode(ReturnMode.ALL)
                 .folderMode(true) // folder mode (false by default)
-                .folderTitle("Select Folder") // folder selection title
-                .imageTitle("Select Image") // image selection title
+                .toolbarFolderTitle("Select Folder") // folder selection title
+                .toolbarImageTitle("Select Image") // image selection title
                 .single() // single mode
                 .showCamera(true) // show camera or not (true by default)
                 .imageDirectory("RGB_Counter") // directory name for captured image  ("Camera" folder by default)
