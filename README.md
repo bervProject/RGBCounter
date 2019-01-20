@@ -11,10 +11,10 @@ Just click photo or grey image (initial) to take a picture.
 
 ## Dependencies
 
- 1. Fresco (Image Viewer)
- 2. Butterknife (Viewer Injection)
- 3. MPAndroidChart (Chart View)
- 4. android-image-picker (Galery picker, Photo picker, etc.)
+1.  Fresco (Image Viewer)
+2.  Butterknife (Viewer Injection)
+3.  MPAndroidChart (Chart View)
+4.  android-image-picker (Galery picker, Photo picker, etc.)
 
 ## LICENSE
 ```markdown
