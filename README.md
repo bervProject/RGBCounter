@@ -18,7 +18,7 @@ Just click photo or grey image (initial) to take a picture.
 
 ## LICENSE
 ```markdown
-  Copyright 2017 Bervianto Leo Pratama
+  Copyright 2018 Bervianto Leo Pratama
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

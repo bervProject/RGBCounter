@@ -1,3 +1,18 @@
+/**
+ * Copyright 2018 Bervianto Leo Pratama
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.berviantoleopratama.rgbcounter;
 
 import android.app.AlertDialog;
@@ -47,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private LineData lineDataBlue;
     private AlertDialog dialog;
     private long start;
-    private static int REQUEST_CODE_PICKER = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,39 +85,38 @@ public class MainActivity extends AppCompatActivity {
                 .showCamera(true) // show camera or not (true by default)
                 .imageDirectory("RGB_Counter") // directory name for captured image  ("Camera" folder by default)
                 .enableLog(false) // disabling log
-                .start(REQUEST_CODE_PICKER); // start image picker activity with request code
+                .start(); // start image picker activity with request code
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_CODE_PICKER) {
-                if (data != null) {
-                    List<Image> images = ImagePicker.getImages(data);
-                    Image output = images.get(0);
-                    String path = output.getPath();
-                    Uri uri = Uri.parse("file://" + path);
-                    imageHolder.setImageURI(uri);
-                    Bitmap bitmap = BitmapFactory.decodeFile(path);
-                    lineDataBlue.clearValues();
-                    lineDataBlue.notifyDataChanged();
-                    lineDataGreen.clearValues();
-                    lineDataGreen.clearValues();
-                    lineDataRed.clearValues();
-                    lineDataRed.notifyDataChanged();
-                    dialog.show();
-                    start = System.nanoTime();
-                    new CountColour().execute(bitmap);
-                }
-            } else {
-                super.onActivityResult(requestCode, resultCode, data);
+        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
+            Image image = ImagePicker.getFirstImageOrNull(data);
+            if (image != null) {
+                String path = image.getPath();
+                Uri uri = Uri.parse("file://" + path);
+                imageHolder.setImageURI(uri);
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                new CountColour().execute(bitmap);
             }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private class CountColour extends AsyncTask<Bitmap, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            lineDataBlue.clearValues();
+            lineDataBlue.notifyDataChanged();
+            lineDataGreen.clearValues();
+            lineDataGreen.clearValues();
+            lineDataRed.clearValues();
+            lineDataRed.notifyDataChanged();
+            dialog.show();
+            start = System.nanoTime();
+        }
 
         @Override
         protected Void doInBackground(Bitmap... params) {
@@ -113,9 +126,9 @@ public class MainActivity extends AppCompatActivity {
             int[] red = new int[256];
             int[] green = new int[256];
             int[] blue = new int[256];
-            for(int j = 0; j < height; j++){
-                for(int i = 0; i < width; i++) {
-                    int color = bitmap.getPixel(i,j);
+            for (int j = 0; j < height; j++) {
+                for (int i = 0; i < width; i++) {
+                    int color = bitmap.getPixel(i, j);
                     int redColor = (color >> 16) & 0xff;
                     int greenColor = (color >> 8) & 0xff;
                     int blueColor = color & 0xff;
@@ -158,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             dialog.dismiss();
             long end = System.nanoTime();
             long duration = end - start;
-            Log.i("Process Photo", String.format("Waktu dibutuhkan : %d",duration));
+            Log.i("Process Photo", String.format("Waktu dibutuhkan : %d", duration));
         }
     }
 }
