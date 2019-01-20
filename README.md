@@ -9,16 +9,20 @@ Count Red, Green, Blue value each pixel in an picture.
 
 Just click photo or grey image (initial) to take a picture.
 
-## Depedencies
+## Dependencies
 
 1. Fresco (Image Viewer)
+
 2. Butterknife (Viewer Injection)
+
 3. MPAndroidChart (Chart View)
+
 4. android-image-picker (Galery picker, Photo picker, etc.)
 
-# LICENSE
-```
-  Copyright 2017 Bervianto Leo P
+
+## LICENSE
+```markdown
+  Copyright 2017 Bervianto Leo Pratama
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.

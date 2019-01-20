@@ -31,22 +31,22 @@ import dmax.dialog.SpotsDialog;
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.image_holder)
-    SimpleDraweeView imageHolder;
+    protected SimpleDraweeView imageHolder;
 
     @BindView(R.id.red_chart)
-    LineChart redChart;
+    protected LineChart redChart;
 
     @BindView(R.id.green_chart)
-    LineChart greenChart;
+    protected LineChart greenChart;
 
     @BindView(R.id.blue_chart)
-    LineChart blueChart;
+    protected LineChart blueChart;
 
-    LineData lineDataRed;
-    LineData lineDataGreen;
-    LineData lineDataBlue;
-    AlertDialog dialog;
-    long start;
+    private LineData lineDataRed;
+    private LineData lineDataGreen;
+    private LineData lineDataBlue;
+    private AlertDialog dialog;
+    private long start;
     private static int REQUEST_CODE_PICKER = 0;
 
     @Override
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.image_holder)
-    void clickImage() {
+    protected void clickImage() {
         ImagePicker.create(this)
                 .returnMode(ReturnMode.ALL)
                 .folderMode(true) // folder mode (false by default)
