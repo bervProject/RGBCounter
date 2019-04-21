@@ -1,4 +1,4 @@
-package com.example.berviantoleopratama.rgbcounter;
+package web.id.berviantoleo.rgbcounter;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.berviantoleopratama.rgbcounter", appContext.getPackageName());
+        assertEquals("com.berviantoleopratama.rgbcounter", appContext.getPackageName());
     }
 }

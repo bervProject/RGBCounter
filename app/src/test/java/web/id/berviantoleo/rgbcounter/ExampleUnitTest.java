@@ -1,4 +1,4 @@
-package com.example.berviantoleopratama.rgbcounter;
+package web.id.berviantoleo.rgbcounter;
 
 import org.junit.Test;
 

@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "com.example.berviantoleopratama.rgbcounter"
+        applicationId "web.id.berviantoleo.rgbcounter"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -39,4 +39,5 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     testImplementation 'junit:junit:4.12'
+    implementation 'androidx.cardview:cardview:1.0.0'
 }

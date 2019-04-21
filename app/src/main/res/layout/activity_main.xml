@@ -6,15 +6,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingTop="10dp"
-    tools:context="com.example.berviantoleopratama.rgbcounter.MainActivity">
+    tools:context="web.id.berviantoleo.rgbcounter.MainActivity">
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/image_holder"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        fresco:actualImageScaleType="fitCenter"
-        fresco:placeholderImage="@color/colorPrimary" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click in Card Below To Choose Image"
+        android:textSize="30sp"
+        android:layout_gravity="center_horizontal"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="10dp"
+        android:layout_margin="10dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/image_holder"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                fresco:actualImageScaleType="fitCenter"
+                fresco:placeholderImage="@drawable/ic_image_black_24dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <ScrollView
         android:layout_width="match_parent"
