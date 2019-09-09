@@ -9,11 +9,13 @@
     tools:context="web.id.berviantoleo.rgbcounter.MainActivity">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="Click in Card Below To Choose Image"
-        android:textSize="30sp"
-        android:layout_gravity="center_horizontal"/>
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,19 +48,10 @@
             android:padding="10dp">
 
             <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/red_chart"
+                android:id="@+id/chart"
                 android:layout_width="match_parent"
                 android:layout_height="300dp" />
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/blue_chart"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" />
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/green_chart"
-                android:layout_width="match_parent"
-                android:layout_height="300dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

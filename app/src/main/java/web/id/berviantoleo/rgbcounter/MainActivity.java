@@ -25,6 +25,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.features.ReturnMode;
 import com.esafirm.imagepicker.model.Image;
@@ -34,10 +36,10 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,20 +50,11 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.image_holder)
     protected SimpleDraweeView imageHolder;
 
-    @BindView(R.id.red_chart)
-    protected LineChart redChart;
+    @BindView(R.id.chart)
+    protected LineChart lineChart;
 
-    @BindView(R.id.green_chart)
-    protected LineChart greenChart;
-
-    @BindView(R.id.blue_chart)
-    protected LineChart blueChart;
-
-    private LineData lineDataRed;
-    private LineData lineDataGreen;
-    private LineData lineDataBlue;
+    private LineData lineData;
     private AlertDialog dialog;
-    private long start;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +62,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         dialog = new SpotsDialog.Builder().setContext(this).build();
-        lineDataRed = new LineData();
-        lineDataGreen = new LineData();
-        lineDataBlue = new LineData();
+        lineData = new LineData();
     }
 
     @OnClick(R.id.image_holder)
@@ -97,29 +88,34 @@ public class MainActivity extends AppCompatActivity {
                 Uri uri = Uri.parse("file://" + path);
                 imageHolder.setImageURI(uri);
                 Bitmap bitmap = BitmapFactory.decodeFile(path);
-                new CountColour().execute(bitmap);
+                new CountColour(this).execute(bitmap);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private class CountColour extends AsyncTask<Bitmap, Void, Void> {
+    private static class CountColour extends AsyncTask<Bitmap, Void, Void> {
+
+        private final WeakReference<MainActivity> activityWeakReference;
+        private long start;
+
+        CountColour(MainActivity context) {
+            activityWeakReference = new WeakReference<>(context);
+        }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            lineDataBlue.clearValues();
-            lineDataBlue.notifyDataChanged();
-            lineDataGreen.clearValues();
-            lineDataGreen.clearValues();
-            lineDataRed.clearValues();
-            lineDataRed.notifyDataChanged();
-            dialog.show();
+            MainActivity activity = activityWeakReference.get();
+            activity.lineData.clearValues();
+            activity.lineData.notifyDataChanged();
+            activity.dialog.show();
             start = System.nanoTime();
         }
 
         @Override
         protected Void doInBackground(Bitmap... params) {
+            MainActivity activity = activityWeakReference.get();
             Bitmap bitmap = params[0];
             int width = bitmap.getWidth();
             int height = bitmap.getHeight();
@@ -154,21 +150,18 @@ public class MainActivity extends AppCompatActivity {
             dataSetGreen.setDrawCircles(false);
             dataSetBlue.setColor(Color.BLUE);
             dataSetBlue.setDrawCircles(false);
-            lineDataRed.addDataSet(dataSetRed);
-            lineDataGreen.addDataSet(dataSetGreen);
-            lineDataBlue.addDataSet(dataSetBlue);
+            activity.lineData.addDataSet(dataSetRed);
+            activity.lineData.addDataSet(dataSetGreen);
+            activity.lineData.addDataSet(dataSetBlue);
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            redChart.setData(lineDataRed);
-            greenChart.setData(lineDataGreen);
-            blueChart.setData(lineDataBlue);
-            redChart.invalidate();
-            greenChart.invalidate();
-            blueChart.invalidate();
-            dialog.dismiss();
+            MainActivity activity = activityWeakReference.get();
+            activity.lineChart.setData(activity.lineData);
+            activity.lineChart.invalidate();
+            activity.dialog.dismiss();
             long end = System.nanoTime();
             long duration = end - start;
             Log.i("Process Photo", String.format("Waktu dibutuhkan : %d", duration));
