@@ -37,7 +37,7 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:2.1.0'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.jakewharton:butterknife:10.2.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.cardview:cardview:1.0.0'
 }
