@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "955115909646",
+    "firebase_url": "https://dare-to-try.firebaseio.com",
+    "project_id": "dare-to-try",
+    "storage_bucket": "dare-to-try.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955115909646:android:de85a37185570edd9fc25f",
+        "android_client_info": {
+          "package_name": "id.my.berviantoleo.daretotry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955115909646-ueqana0nrtptjgs4ub6uqn8uk2adb676.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "id.my.berviantoleo.daretotry",
+            "certificate_hash": "0b5f2ef946e1165ad62539a9605edaaecb519f57"
+          }
+        },
+        {
+          "client_id": "955115909646-heuf79ti8nlmeo18simev8r80thqu9pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn8zuc5Xh41-qRemTwT9WP2zyGc4HTgQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955115909646-heuf79ti8nlmeo18simev8r80thqu9pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955115909646:android:7471b07c8892109c9fc25f",
+        "android_client_info": {
+          "package_name": "id.my.berviantoleo.personal_web_mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955115909646-heuf79ti8nlmeo18simev8r80thqu9pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn8zuc5Xh41-qRemTwT9WP2zyGc4HTgQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955115909646-heuf79ti8nlmeo18simev8r80thqu9pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955115909646:android:eef2ffd5a71667b69fc25f",
+        "android_client_info": {
+          "package_name": "web.id.berviantoleo.rgbcounter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955115909646-heuf79ti8nlmeo18simev8r80thqu9pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn8zuc5Xh41-qRemTwT9WP2zyGc4HTgQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955115909646-heuf79ti8nlmeo18simev8r80thqu9pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
