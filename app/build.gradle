@@ -33,7 +33,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation "androidx.multidex:multidex:$multidex_version"
-    implementation 'com.google.firebase:firebase-analytics:17.2.3'
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.4'
     implementation 'com.google.firebase:firebase-messaging:20.1.5'
     implementation 'androidx.appcompat:appcompat:1.1.0'
