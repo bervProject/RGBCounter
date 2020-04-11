@@ -34,7 +34,7 @@ dependencies {
     })
     implementation "androidx.multidex:multidex:$multidex_version"
     implementation 'com.google.firebase:firebase-analytics:17.3.0'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.4'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.5'
     implementation 'com.google.firebase:firebase-messaging:20.1.5'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
