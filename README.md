@@ -1,7 +1,10 @@
 # RGBCounter
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/63b29de7e23d4110864abed64630e6ea)](https://app.codacy.com/app/berviantoleo/RGBCounter_2?utm_source=github.com&utm_medium=referral&utm_content=bervProject/RGBCounter&utm_campaign=Badge_Grade_Settings)
-[![Build Status](https://travis-ci.org/bervProject/RGBCounter.svg?branch=master)](https://travis-ci.org/bervProject/RGBCounter)
+## Build Status
+
+| Code Review | Build Status |
+|:-----------:|:------------:|
+| [![Codacy Badge](https://api.codacy.com/project/badge/Grade/63b29de7e23d4110864abed64630e6ea)](https://app.codacy.com/app/berviantoleo/RGBCounter_2?utm_source=github.com&utm_medium=referral&utm_content=bervProject/RGBCounter&utm_campaign=Badge_Grade_Settings) | [![Build Status](https://travis-ci.org/bervProject/RGBCounter.svg?branch=master)](https://travis-ci.org/bervProject/RGBCounter) |
 
 Count Red, Green, Blue value each pixel in an picture.
 
@@ -12,9 +15,8 @@ Just click photo or grey image (initial) to take a picture.
 ## Dependencies
 
 1.  Fresco (Image Viewer)
-2.  Butterknife (Viewer Injection)
-3.  MPAndroidChart (Chart View)
-4.  android-image-picker (Galery picker, Photo picker, etc.)
+2.  MPAndroidChart (Chart View)
+3.  android-image-picker (Galery picker, Photo picker, etc.)
 
 ## LICENSE
 ```markdown
