@@ -27,6 +27,7 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.esafirm.imagepicker.features.ImagePicker
 import com.esafirm.imagepicker.features.ReturnMode
@@ -57,6 +58,11 @@ class MainActivity : AppCompatActivity() {
                     .imageDirectory("RGB_Counter") // directory name for captured image  ("Camera" folder by default)
                     .enableLog(false) // disabling log
                     .start() // start image picker activity with request code
+        }
+        saveToGallery.setOnClickListener {
+            val fileLocation = "chart-${System.currentTimeMillis()}.jpg"
+            chart.saveToGallery(fileLocation)
+            Toast.makeText(this, "Saved to: $fileLocation", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -141,7 +147,9 @@ class MainActivity : AppCompatActivity() {
                 activity.dialog.dismiss()
                 val end = System.nanoTime()
                 val duration = end - start
-                Log.i("Process Photo", String.format("Waktu dibutuhkan : %d", duration))
+                val timeProcess = "Time to process: $duration ns"
+                Log.i("Process Photo", timeProcess)
+                Toast.makeText(activity, timeProcess, Toast.LENGTH_SHORT).show()
             }
         }
 
