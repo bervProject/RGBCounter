@@ -16,12 +16,7 @@ jdk:
   - oraclejdk8
 
 before_script:
-  - echo y | android update sdk -u -a -t tools
-  - echo y | android update sdk -u -a -t build-tools-29.0.3
-  - echo y | android update sdk -u -a -t android-30
-  - echo y | android update sdk -u -a -t extra-android-support
-  - echo y | android update sdk -u -a -t extra-google-m2repository
-  - echo y | android update sdk -u -a -t extra-android-m2repository
+  - yes | sdkmanager --licenses
   - chmod +x ./gradlew
 
 script:
