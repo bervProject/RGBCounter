@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
     implementation 'com.github.esafirm.android-image-picker:imagepicker:2.2.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation 'com.facebook.fresco:fresco:2.3.0'
+    implementation 'com.facebook.fresco:fresco:2.4.0'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     testImplementation 'junit:junit:4.13.1'
 }
