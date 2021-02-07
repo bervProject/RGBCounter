@@ -24,7 +24,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -34,20 +33,25 @@ import com.esafirm.imagepicker.features.ReturnMode
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import dmax.dialog.SpotsDialog
-import kotlinx.android.synthetic.main.activity_main.*
+import web.id.berviantoleo.rgbcounter.databinding.ActivityMainBinding
 import java.lang.ref.WeakReference
 import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     private val lineData: LineData = LineData()
     private lateinit var dialog: AlertDialog
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         dialog = SpotsDialog.Builder().setContext(this).build()
-        image_holder.setOnClickListener {
+        binding.imageHolder.setOnClickListener {
             ImagePicker.create(this)
                     .returnMode(ReturnMode.ALL)
                     .folderMode(true) // folder mode (false by default)
@@ -59,9 +63,9 @@ class MainActivity : AppCompatActivity() {
                     .enableLog(false) // disabling log
                     .start() // start image picker activity with request code
         }
-        saveToGallery.setOnClickListener {
+        binding.saveToGallery.setOnClickListener {
             val fileLocation = "chart-${System.currentTimeMillis()}.jpg"
-            chart.saveToGallery(fileLocation)
+            binding.chart.saveToGallery(fileLocation)
             Toast.makeText(this, "Saved to: $fileLocation", Toast.LENGTH_LONG).show()
         }
     }
@@ -72,86 +76,88 @@ class MainActivity : AppCompatActivity() {
             if (image != null) {
                 val path = image.path
                 val uri = Uri.parse("file://$path")
-                image_holder.setImageURI(uri, this)
+                binding.imageHolder.setImageURI(uri, this)
                 val bitmap = BitmapFactory.decodeFile(path)
-                CountColour(this).execute(bitmap)
+                val runnableCounter = ColourCounter(this, bitmap)
+                Thread(runnableCounter).start()
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private class CountColour internal constructor(context: MainActivity) : AsyncTask<Bitmap?, Void?, Void?>() {
+    class ColourCounter constructor(context: MainActivity, private val bitmap: Bitmap?) : Runnable {
         private val activityWeakReference: WeakReference<MainActivity> = WeakReference(context)
         private var start: Long = 0
-        override fun onPreExecute() {
-            super.onPreExecute()
-            val activity = activityWeakReference.get()
-            if (activity != null) {
-                activity.lineData.clearValues()
-                activity.lineData.notifyDataChanged()
-                activity.dialog.show()
-                start = System.nanoTime()
-            }
-        }
 
-        override fun doInBackground(vararg params: Bitmap?): Void? {
+        override fun run() {
             val activity = activityWeakReference.get()
-            val bitmap = params[0]
-            if (activity == null || bitmap == null) {
-                return null
-            }
-            val width = bitmap.width
-            val height = bitmap.height
-            val red = IntArray(256)
-            val green = IntArray(256)
-            val blue = IntArray(256)
-            for (j in 0 until height) {
-                for (i in 0 until width) {
-                    val color = bitmap.getPixel(i, j)
-                    val redColor = color shr 16 and 0xff
-                    val greenColor = color shr 8 and 0xff
-                    val blueColor = color and 0xff
-                    red[redColor] += 1
-                    green[greenColor] += 1
-                    blue[blueColor] += 1
+            if (activity != null && bitmap != null) {
+                runOnUiThread {
+                    run()
+                    {
+                        activity.lineData.clearValues()
+                        activity.lineData.notifyDataChanged()
+                        activity.dialog.show()
+                    }
+                }
+                start = System.nanoTime()
+                val width = bitmap.width
+                val height = bitmap.height
+                val red = IntArray(256)
+                val green = IntArray(256)
+                val blue = IntArray(256)
+                for (j in 0 until height) {
+                    for (i in 0 until width) {
+                        val color = bitmap.getPixel(i, j)
+                        val redColor = color shr 16 and 0xff
+                        val greenColor = color shr 8 and 0xff
+                        val blueColor = color and 0xff
+                        red[redColor] += 1
+                        green[greenColor] += 1
+                        blue[blueColor] += 1
+                    }
+                }
+                val entriesRed: MutableList<Entry> = ArrayList()
+                val entriesGreen: MutableList<Entry> = ArrayList()
+                val entriesBlue: MutableList<Entry> = ArrayList()
+                for (i in 0..255) {
+                    entriesRed.add(Entry(i.toFloat(), red[i].toFloat()))
+                    entriesGreen.add(Entry(i.toFloat(), green[i].toFloat()))
+                    entriesBlue.add(Entry(i.toFloat(), blue[i].toFloat()))
+                }
+                val dataSetRed = LineDataSet(entriesRed, "red")
+                val dataSetGreen = LineDataSet(entriesGreen, "green")
+                val dataSetBlue = LineDataSet(entriesBlue, "blue")
+                dataSetRed.color = Color.RED
+                dataSetRed.setDrawCircles(false)
+                dataSetGreen.color = Color.GREEN
+                dataSetGreen.setDrawCircles(false)
+                dataSetBlue.color = Color.BLUE
+                dataSetBlue.setDrawCircles(false)
+                activity.lineData.addDataSet(dataSetRed)
+                activity.lineData.addDataSet(dataSetGreen)
+                activity.lineData.addDataSet(dataSetBlue)
+                if (activity.lineData.dataSetCount > 0) {
+                    activity.binding.chart.data = activity.lineData
+                    runOnUiThread {
+                        run()
+                        {
+                            activity.binding.chart.invalidate()
+                            activity.dialog.dismiss()
+                        }
+                    }
+                    val end = System.nanoTime()
+                    val duration = end - start
+                    val timeProcess = "Time to process: $duration ns"
+                    Log.i("Process Photo", timeProcess)
+                    runOnUiThread {
+                        run()
+                        {
+                            Toast.makeText(activity, timeProcess, Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
-            val entriesRed: MutableList<Entry> = ArrayList()
-            val entriesGreen: MutableList<Entry> = ArrayList()
-            val entriesBlue: MutableList<Entry> = ArrayList()
-            for (i in 0..255) {
-                entriesRed.add(Entry(i.toFloat(), red[i].toFloat()))
-                entriesGreen.add(Entry(i.toFloat(), green[i].toFloat()))
-                entriesBlue.add(Entry(i.toFloat(), blue[i].toFloat()))
-            }
-            val dataSetRed = LineDataSet(entriesRed, "red")
-            val dataSetGreen = LineDataSet(entriesGreen, "green")
-            val dataSetBlue = LineDataSet(entriesBlue, "blue")
-            dataSetRed.color = Color.RED
-            dataSetRed.setDrawCircles(false)
-            dataSetGreen.color = Color.GREEN
-            dataSetGreen.setDrawCircles(false)
-            dataSetBlue.color = Color.BLUE
-            dataSetBlue.setDrawCircles(false)
-            activity.lineData.addDataSet(dataSetRed)
-            activity.lineData.addDataSet(dataSetGreen)
-            activity.lineData.addDataSet(dataSetBlue)
-            return null
         }
-
-        override fun onPostExecute(aVoid: Void?) {
-            val activity = activityWeakReference.get()
-            if (activity != null && activity.lineData.dataSetCount > 0) {
-                activity.chart.data = activity.lineData
-                activity.chart.invalidate()
-                activity.dialog.dismiss()
-                val end = System.nanoTime()
-                val duration = end - start
-                val timeProcess = "Time to process: $duration ns"
-                Log.i("Process Photo", timeProcess)
-                Toast.makeText(activity, timeProcess, Toast.LENGTH_SHORT).show()
-            }
-        }
-
     }
 }

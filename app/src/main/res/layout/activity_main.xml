@@ -35,7 +35,9 @@
         fresco:layout_constraintTop_toBottomOf="@+id/title">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/child_constraint"
             android:layout_width="match_parent"
+            fresco:layout_constraintTop_toBottomOf="@+id/title"
             android:layout_height="match_parent">
 
             <com.facebook.drawee.view.SimpleDraweeView
@@ -45,7 +47,7 @@
                 fresco:actualImageScaleType="fitCenter"
                 fresco:layout_constraintEnd_toEndOf="parent"
                 fresco:layout_constraintStart_toStartOf="parent"
-                fresco:layout_constraintTop_toBottomOf="@+id/title"
+                fresco:layout_constraintTop_toTopOf="parent"
                 fresco:placeholderImage="@drawable/ic_image_black_24dp" />
 
             <TextView
