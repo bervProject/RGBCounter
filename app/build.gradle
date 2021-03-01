@@ -53,7 +53,7 @@ dependencies {
     implementation 'com.facebook.fresco:fresco:2.4.0'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
 }
 repositories {
     mavenCentral()
