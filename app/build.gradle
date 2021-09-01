@@ -45,7 +45,7 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'com.google.firebase:firebase-analytics:19.0.0'
-    implementation 'com.google.firebase:firebase-inappmessaging-display:20.0.0'
+    implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.0'
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.github.esafirm.android-image-picker:imagepicker:2.4.7'
