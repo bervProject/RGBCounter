@@ -47,7 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-inappmessaging-display:20.2.0'
     implementation 'com.google.firebase:firebase-messaging:23.1.0'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
-    implementation 'com.github.esafirm.android-image-picker:imagepicker:2.4.7'
+    implementation 'com.github.esafirm.android-image-picker:imagepicker:3.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     implementation 'com.facebook.fresco:fresco:2.6.0'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
