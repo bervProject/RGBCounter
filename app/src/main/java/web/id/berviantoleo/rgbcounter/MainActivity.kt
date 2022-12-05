@@ -48,21 +48,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        val launcher = registerImagePicker {
+                result: List<Image> ->
+            val image = result.firstOrNull()
+            if (image != null) {
+                val path = image.path
+                val uri = Uri.parse("file://$path")
+                binding.imageHolder.setImageURI(uri, this)
+                val bitmap = BitmapFactory.decodeFile(path)
+                val runnableCounter = ColourCounter(this, bitmap)
+                Thread(runnableCounter).start()
+            }
+        }
         dialog = SpotsDialog.Builder().setContext(this).build()
         binding.imageHolder.setOnClickListener {
-            val launcher = registerImagePicker {
-                    result: List<Image> ->
-                val image = result.firstOrNull()
-                if (image != null) {
-                    val path = image.path
-                    val uri = Uri.parse("file://$path")
-                    binding.imageHolder.setImageURI(uri, this)
-                    val bitmap = BitmapFactory.decodeFile(path)
-                    val runnableCounter = ColourCounter(this, bitmap)
-                    Thread(runnableCounter).start()
-                }
-            }
-
             launcher.launch()
         }
         binding.saveToGallery.setOnClickListener {
