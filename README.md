@@ -4,7 +4,7 @@
 
 | Code Review | Build Status |
 |:-----------:|:------------:|
-| [![Codacy Badge](https://api.codacy.com/project/badge/Grade/63b29de7e23d4110864abed64630e6ea)](https://app.codacy.com/app/berviantoleo/RGBCounter_2?utm_source=github.com&utm_medium=referral&utm_content=bervProject/RGBCounter&utm_campaign=Badge_Grade_Settings) | [![Build Status](https://travis-ci.org/bervProject/RGBCounter.svg?branch=master)](https://travis-ci.org/bervProject/RGBCounter) |
+| [![Codacy Badge](https://app.codacy.com/project/badge/Grade/07979941bb3e4d078f462fbc84fc9f84)](https://www.codacy.com/gh/bervProject/RGBCounter/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bervProject/RGBCounter&amp;utm_campaign=Badge_Grade) | [![Android CI](https://github.com/bervProject/RGBCounter/actions/workflows/android.yml/badge.svg)](https://github.com/bervProject/RGBCounter/actions/workflows/android.yml) |
 
 Count Red, Green, Blue value each pixel in an picture.
 
