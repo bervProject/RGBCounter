@@ -19,7 +19,6 @@
 package web.id.berviantoleo.rgbcounter
 
 import android.app.AlertDialog
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -28,8 +27,8 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.esafirm.imagepicker.features.ImagePicker
-import com.esafirm.imagepicker.features.ReturnMode
+import com.esafirm.imagepicker.features.registerImagePicker
+import com.esafirm.imagepicker.model.Image
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -37,7 +36,6 @@ import com.microsoft.appcenter.utils.HandlerUtils.runOnUiThread
 import dmax.dialog.SpotsDialog
 import web.id.berviantoleo.rgbcounter.databinding.ActivityMainBinding
 import java.lang.ref.WeakReference
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,29 +48,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        dialog = SpotsDialog.Builder().setContext(this).build()
-        binding.imageHolder.setOnClickListener {
-            ImagePicker.create(this)
-                    .returnMode(ReturnMode.ALL)
-                    .folderMode(true) // folder mode (false by default)
-                    .toolbarFolderTitle("Select Folder") // folder selection title
-                    .toolbarImageTitle("Select Image") // image selection title
-                    .single() // single mode
-                    .showCamera(true) // show camera or not (true by default)
-                    .imageDirectory("RGB_Counter") // directory name for captured image  ("Camera" folder by default)
-                    .enableLog(false) // disabling log
-                    .start() // start image picker activity with request code
-        }
-        binding.saveToGallery.setOnClickListener {
-            val fileLocation = "chart-${System.currentTimeMillis()}.jpg"
-            binding.chart.saveToGallery(fileLocation)
-            Toast.makeText(this, "Saved to: $fileLocation", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (ImagePicker.shouldHandle(requestCode, resultCode, data)) {
-            val image = ImagePicker.getFirstImageOrNull(data)
+        val launcher = registerImagePicker {
+                result: List<Image> ->
+            val image = result.firstOrNull()
             if (image != null) {
                 val path = image.path
                 val uri = Uri.parse("file://$path")
@@ -82,7 +60,15 @@ class MainActivity : AppCompatActivity() {
                 Thread(runnableCounter).start()
             }
         }
-        super.onActivityResult(requestCode, resultCode, data)
+        dialog = SpotsDialog.Builder().setContext(this).build()
+        binding.imageHolder.setOnClickListener {
+            launcher.launch()
+        }
+        binding.saveToGallery.setOnClickListener {
+            val fileLocation = "chart-${System.currentTimeMillis()}.jpg"
+            binding.chart.saveToGallery(fileLocation)
+            Toast.makeText(this, "Saved to: $fileLocation", Toast.LENGTH_LONG).show()
+        }
     }
 
     class ColourCounter constructor(context: MainActivity, private val bitmap: Bitmap?) : Runnable {
