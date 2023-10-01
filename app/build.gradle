@@ -49,7 +49,7 @@ dependencies {
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.github.esafirm:android-image-picker:3.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation 'com.facebook.fresco:fresco:2.6.0'
+    implementation 'com.facebook.fresco:fresco:3.1.1'
     implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
     implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
     testImplementation 'junit:junit:4.13.2'
