@@ -4,14 +4,15 @@ apply plugin: 'com.google.gms.google-services'
 
 def multidex_version = "2.0.1"
 android {
-    compileSdkVersion 33
+    compileSdk 35
+    namespace = "web.id.berviantoleo.rgbcounter"
     defaultConfig {
         applicationId "web.id.berviantoleo.rgbcounter"
         minSdkVersion 21
-        targetSdkVersion 33
-        versionCode 5
+        targetSdkVersion 35
+        versionCode 6
         multiDexEnabled true
-        versionName "1.4"
+        versionName "1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -24,8 +25,8 @@ android {
         viewBinding true
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
@@ -36,14 +37,14 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.3-native-mt'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1-native-mt'
     implementation "androidx.multidex:multidex:$multidex_version"
     implementation "androidx.core:core-ktx:1.13.1"
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.legacy:legacy-support-core-utils:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.firebase:firebase-analytics:22.0.1'
+    implementation 'com.google.firebase:firebase-analytics:22.0.2'
     implementation 'com.google.firebase:firebase-inappmessaging-display:21.0.0'
     implementation 'com.google.firebase:firebase-messaging:24.0.0'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
