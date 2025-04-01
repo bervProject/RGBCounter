@@ -7,10 +7,10 @@ updates:
     time: "08:00"
     timezone: Asia/Jakarta
   open-pull-requests-limit: 100
-  ignore:
-  - dependency-name: org.jetbrains.kotlin:kotlin-stdlib-jdk8
-    versions:
-    - 1.4.31
-  - dependency-name: org.jetbrains.kotlin:kotlin-gradle-plugin
-    versions:
-    - 1.4.31
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: monthly
+    time: "08:00"
+    timezone: Asia/Jakarta
+  open-pull-requests-limit: 100
