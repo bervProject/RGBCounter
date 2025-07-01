@@ -46,7 +46,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'com.google.firebase:firebase-analytics:22.5.0'
     implementation 'com.google.firebase:firebase-inappmessaging-display:21.0.2'
-    implementation 'com.google.firebase:firebase-messaging:24.1.1'
+    implementation 'com.google.firebase:firebase-messaging:24.1.2'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.github.esafirm:android-image-picker:3.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
