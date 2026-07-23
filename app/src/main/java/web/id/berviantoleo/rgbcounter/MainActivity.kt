@@ -19,11 +19,14 @@
 package web.id.berviantoleo.rgbcounter
 
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
@@ -34,6 +37,7 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import dmax.dialog.SpotsDialog
 import web.id.berviantoleo.rgbcounter.databinding.ActivityMainBinding
+import java.io.OutputStream
 import java.lang.ref.WeakReference
 
 
@@ -62,13 +66,8 @@ class MainActivity : AppCompatActivity() {
             launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
         binding.saveToGallery.setOnClickListener {
-            val fileLocation = "chart-${System.currentTimeMillis()}.jpg"
-            val success = binding.chart.saveToGallery(fileLocation)
-            if (success) {
-                Toast.makeText(this, "Saved to: $fileLocation", Toast.LENGTH_LONG).show()
-            } else {
-                Toast.makeText(this, "Failed to save chart", Toast.LENGTH_LONG).show()
-            }
+            val fileName = "chart-${System.currentTimeMillis()}.jpg"
+            saveChartToGallery(fileName)
         }
     }
 
@@ -150,6 +149,41 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(activity, "No data to display", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun saveChartToGallery(fileName: String) {
+        val bitmap = binding.chart.chartBitmap
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/RGBCounter")
+                put(MediaStore.MediaColumns.IS_PENDING, 1)
+            }
+        }
+
+        val uri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        if (uri == null) {
+            Toast.makeText(this, "Failed to create MediaStore entry", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        try {
+            contentResolver.openOutputStream(uri)?.use { outputStream ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                contentValues.clear()
+                contentValues.put(MediaStore.MediaColumns.IS_PENDING, 0)
+                contentResolver.update(uri, contentValues, null, null)
+            }
+            Toast.makeText(this, "Saved to Gallery", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e("MainActivity", "Error saving chart", e)
+            contentResolver.delete(uri, null, null)
+            Toast.makeText(this, "Failed to save chart: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
