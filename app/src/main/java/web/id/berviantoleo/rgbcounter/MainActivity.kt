@@ -22,13 +22,12 @@ import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.esafirm.imagepicker.features.registerImagePicker
-import com.esafirm.imagepicker.model.Image
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -48,21 +47,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val launcher = registerImagePicker {
-                result: List<Image> ->
-            val image = result.firstOrNull()
-            if (image != null) {
-                val path = image.path
-                val uri = Uri.parse("file://$path")
+        val launcher = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
+                uri ->
+            if (uri != null) {
                 binding.imageHolder.setImageURI(uri, this)
-                val bitmap = BitmapFactory.decodeFile(path)
+                val bitmap = BitmapFactory.decodeFile(uri.path)
                 val runnableCounter = ColourCounter(this, bitmap)
                 Thread(runnableCounter).start()
+            }
+            else {
+                Log.d("PhotoPicker", "No media selected")
             }
         }
         dialog = SpotsDialog.Builder().setContext(this).build()
         binding.imageHolder.setOnClickListener {
-            launcher.launch()
+            launcher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
         binding.saveToGallery.setOnClickListener {
             val fileLocation = "chart-${System.currentTimeMillis()}.jpg"
